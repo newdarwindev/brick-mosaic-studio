@@ -43,4 +43,8 @@ test('preset switching and reset restore the original scene', async ({
   await expect(page.locator('#image-name')).toContainText('Coastal sunrise');
   await expect(page.locator('#tiles')).toHaveText('576');
   await expect(page.getByLabel('Choose a preset')).toHaveValue('coast');
+  await page.screenshot({
+    path: test.info().outputPath('preset.png'),
+    fullPage: true,
+  });
 });

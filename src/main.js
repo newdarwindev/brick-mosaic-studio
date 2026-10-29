@@ -71,7 +71,8 @@ function regenerate() {
   const ctx = /** @type {CanvasRenderingContext2D} */ (small.getContext('2d'));
   ctx.drawImage(source, 0, 0, size, size);
   cells = quantize(ctx.getImageData(0, 0, size, size).data);
-  rowInput.max = rowInput.value = String(size);
+  rowInput.max = String(size);
+  rowInput.value = String(size);
   element('tiles').textContent = String(cells.length);
   element('dimensions').textContent = `${size} × ${size}`;
   const used = inventory(cells).filter((c) => c.count > 0);
