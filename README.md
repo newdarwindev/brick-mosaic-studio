@@ -1,79 +1,38 @@
-# Public demo template
+# Brick Mosaic Studio
 
-A small vanilla JavaScript app with a serious quality baseline.
+A polished **canned interactive mockup**, not an AI generation service. Explore two original preset illustrations as flat brick-style mosaics: change grid size, reveal rows, toggle studs, and download illustrative placement instructions and a parts CSV. No uploads, accounts, API calls or payment flows.
 
-[![Quality and Pages](https://github.com/newdarwindev/public-demo-template/actions/workflows/quality-pages.yml/badge.svg)](https://github.com/newdarwindev/public-demo-template/actions/workflows/quality-pages.yml)
+[Live demo](https://newdarwindev.github.io/brick-mosaic-studio/) · [Desktop and mobile recordings](https://newdarwindev.github.io/brick-mosaic-studio/evidence/) · [CI and artifacts](https://github.com/newdarwindev/brick-mosaic-studio/actions/workflows/quality-pages.yml)
 
-**[Live demo](https://newdarwindev.github.io/public-demo-template/)** ·
-**[Watch visual test videos](https://newdarwindev.github.io/public-demo-template/evidence/)** ·
-**[CI runs and downloadable artifacts](https://github.com/newdarwindev/public-demo-template/actions/workflows/quality-pages.yml)**
+## Inspiration and limits
 
-## Start a new demo
+Inspired by the concept described in [BricksChat's public Reddit announcement](https://www.reddit.com/r/SideProject/comments/1x9cnre/i_built_brickschat_turn_images_into_complex_lego/), originally shared through [this shortlink](https://www.reddit.com/r/SideProject/s/wvTlmmGebC). The announcement and discussion were readable; the BricksChat app/gallery were not accessible during research. This is an original, deliberately narrower mockup, **not a recreation of the app's actual UI or capabilities**. No source code, branding, images, 3D models or instructions were copied. All preset artwork is drawn by our own Canvas code.
 
-Use GitHub's **Use this template → Create a new repository**, or:
+- No AI, image upload, 3D reconstruction, structural validation or official part matching.
+- Each cell counts as one generic 1×1 tile; baseplates are not included.
+- Palette names/hex values are illustrative, not manufacturer part/color IDs.
+- Downloads describe the complete flat grid, regardless of the current row preview.
+- Not affiliated with BricksChat or LEGO.
+
+## Development and verification
 
 ```sh
-gh repo create YOUR-OWNER/YOUR-DEMO --public --template newdarwindev/public-demo-template --clone
-cd YOUR-DEMO
 npm ci
 npm run dev
-```
-
-Then update this README's owner/repository links and package name, replace the
-sample, and keep the contract in [AGENTS.md](AGENTS.md). In the **new** repo's
-Settings → Pages, select **GitHub Actions** as the source (repository-owner
-setup, not an automatic account-wide setting). Push a change or dispatch the
-workflow. Template generation does not copy Pages settings and may not start CI
-until the first push/dispatch. This repo sets no global policy for other repos.
-
-## Quality gates
-
-```sh
-npm ci
 npm run check
 npx playwright install --with-deps chromium
 npm run test:ui
 npm run evidence
 ```
 
-- ESLint recommended plus complexity **8**, depth **3**, parameters **3**,
-  function length **55**; zero warnings allowed.
-- Prettier check, TypeScript strict `checkJs`, Node unit tests, static Vite build.
-- Desktop and mobile Chromium interactions: repeated clicks, lower bound, reset,
-  reload, and horizontal overflow. Unit tests cover the upper bound too.
-- Playwright records **every test**, including passing tests. These are functional
-  UI tests with visual evidence, not screenshot-baseline/pixel-diff tests.
-- Pull requests validate and upload evidence but cannot deploy. Default branch
-  pushes deploy only after validation succeeds. Actions are SHA-pinned; only the
-  deploy job receives `pages: write` and `id-token: write`.
+Generated using GitHub's template workflow from `newdarwindev/public-demo-template` at verified source commit `99e0355701924e43f79263d40e4c0bfc60d42b4e`, specifically for this request. It does not establish an account-wide default.
 
-## Visual evidence
+The inherited quality contract is in [AGENTS.md](AGENTS.md). ESLint enforces complexity ≤8, depth ≤3, ≤3 parameters and ≤55-line functions without warnings; strict JS type checking, Prettier, unit tests and Vite build run before deployment. Desktop/mobile Playwright covers grid changes, repeated controls, row reveal, downloads, preset switching, reset, reload and overflow. Tests use only newly created synthetic preset data.
 
-The public [video gallery](https://newdarwindev.github.io/public-demo-template/evidence/)
-contains WebM recordings from the latest **successfully deployed** default-branch
-commit, with its SHA. It needs no GitHub login. It is not evidence of newer failed
-runs. Locally, `npm run evidence` builds the same gallery in `dist/evidence/`.
+## Visual evidence and deployment
 
-For any specific run, open [Actions](https://github.com/newdarwindev/public-demo-template/actions/workflows/quality-pages.yml),
-choose the run, and download **visual-evidence-RUN_ID** from Artifacts. The ZIP
-includes `test-results/` videos and failure traces/screenshots plus
-`playwright-report/` (open its `index.html` via `npx playwright show-report`).
-GitHub artifact downloads generally require a signed-in GitHub account. Artifacts
-expire after **14 days**; the public Pages gallery persists until replaced.
-Uploads run even after failures; an infrastructure failure before browser startup
-may produce no video, and CI must not be described as having visual evidence then.
+Every Playwright test records video, including passing tests. `npm run evidence` collects the WebM files into `dist/evidence/` and identifies the build commit. These are interaction recordings, not pixel-regression tests. The [public video gallery](https://newdarwindev.github.io/brick-mosaic-studio/evidence/) corresponds to the latest successfully deployed commit.
 
-The example has a browser UI, not a TUI. See the
-[TUI recording adaptation guide](docs/tui-recordings.md) when adding one.
+The Actions run also uploads `visual-evidence-RUN_ID` (test-results and HTML report) even on test failures; GitHub artifact downloads generally require login and expire after 14 days. Local report: `npx playwright show-report`. An infrastructure failure before browsers start may yield no video.
 
-## Stack and scope
-
-Node 22, vanilla ES modules, Vite, ESLint, Prettier, TypeScript checkJs, and
-Playwright. No runtime dependencies, credentials, backend, telemetry, or storage.
-The counter deliberately resets on reload. All example content is synthetic.
-
-## References
-
-- [GitHub Pages custom workflows](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages)
-- [Playwright video recording](https://playwright.dev/docs/videos)
-- [ESLint complexity rule](https://eslint.org/docs/latest/rules/complexity)
+SHA-pinned Actions validate all PRs, including forks with read-only permissions and fresh builds. Only trusted main-branch pushes deploy Pages, after all quality/UI checks pass; deploy alone receives Pages/OIDC permissions. No repository secrets are needed. There is no TUI in this demo.
